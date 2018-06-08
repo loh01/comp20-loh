@@ -1,0 +1,16 @@
+#title {
+	font: helvetica;
+	font-size: 20pt;
+	color: black;
+	font-weight: 900;
+}
+#lyrics {
+	font: helvetica;
+	font-size: 15pt;
+	color: black;
+	font-style: italic;
+}
+body {
+	text-align: center;
+	background-color: #E5E7EB;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Rick Roll</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+	<h1 id="title">Rick Roll</h1>
+
+	<video src="https://www.cs.tufts.edu/comp/20/rickroll.mp4" id="rickroll" controls></video>
+	<div id="lyrics"></div>
+
+	<script>
+		var video = document.getElementById("rickroll");
+		var caption = document.getElementById("lyrics");
+		video.addEventListener("timeupdate", function() {
+			if (video.currentTime > 18 && video.currentTime < 21) {
+				caption.innerHTML = "We're no strangers to love";
+			}
+			else if (video.currentTime > 21 && video.currentTime < 26) {
+				caption.innerHTML = "You know the rules and so do I";
+			}
+			else if (video.currentTime > 26 && video.currentTime < 31) {
+				caption.innerHTML = "A full commitment's what I'm thinking of";
+			}
+			else if (video.currentTime > 31 && video.currentTime < 34) {
+				caption.innerHTML = "You wouldn't get this from any other guy";
+			}
+			else if ((video.currentTime > 34 && video.currentTime < 39) || (video.currentTime > 153 && video.currentTime < 158)) {
+				caption.innerHTML = "I just wanna tell you how I'm feeling";
+			}
+			else if ((video.currentTime > 39 && video.currentTime < 42) || (video.currentTime > 158 && video.currentTime < 161)) {
+				caption.innerHTML = "Gotta make you understand";
+			}
+			else if ((((video.currentTime > 42 && video.currentTime < 44) || (video.currentTime > 85 && video.currentTime < 87))
+				|| ((video.currentTime > 101 && video.currentTime < 104) || (video.currentTime > 161 && video.currentTime < 163)))
+				|| ((video.currentTime > 178 && video.currentTime < 180) || (video.currentTime > 195 && video.currentTime < 197))) {
+				caption.innerHTML = "Never gonna give you up";
+			}
+			else if ((video.currentTime > 44 && video.currentTime < 47) || (video.currentTime > 87 && video.currentTime < 89)
+				|| (video.currentTime > 104 && video.currentTime < 106) || (video.currentTime > 163 && video.currentTime < 165)
+				|| (video.currentTime > 180 && video.currentTime < 182) || (video.currentTime > 197 && video.currentTime < 199)) {
+				caption.innerHTML = "Never gonna let you down";
+			}
+			else if ((video.currentTime > 47 && video.currentTime < 50) || (video.currentTime > 89 && video.currentTime < 93)
+				|| (video.currentTime > 106 && video.currentTime < 110) || (video.currentTime > 165 && video.currentTime < 169)
+				|| (video.currentTime > 182 && video.currentTime < 186) || (video.currentTime > 199 && video.currentTime < 204)) {
+				caption.innerHTML = "Never gonna run around and desert you";
+			}
+			else if ((video.currentTime > 50 && video.currentTime < 53) || (video.currentTime > 93 && video.currentTime < 95)
+				|| (video.currentTime > 110 && video.currentTime < 112) || (video.currentTime > 169 && video.currentTime < 172)
+				|| (video.currentTime > 186 && video.currentTime < 188) || (video.currentTime > 204 && video.currentTime < 206)) {
+				caption.innerHTML = "Never gonna make you cry";
+			}
+			else if ((((video.currentTime > 53 && video.currentTime < 55) || (video.currentTime > 95 && video.currentTime < 97))
+				|| ((video.currentTime > 112 && video.currentTime < 114) || (video.currentTime > 172 && video.currentTime < 174)))
+				|| ((video.currentTime > 188 && video.currentTime < 191) || (video.currentTime > 206 && video.currentTime < 208))) {
+				caption.innerHTML = "Never gonna say goodbye";
+			}
+			else if ((((video.currentTime > 55 && video.currentTime < 59) || (video.currentTime > 97 && video.currentTime < 101))
+				|| ((video.currentTime > 114 && video.currentTime < 119) || (video.currentTime > 174 && video.currentTime < 178)))
+				|| ((video.currentTime > 191 && video.currentTime < 195) || (video.currentTime > 208 && video.currentTime < 211))) {
+				caption.innerHTML = "Never gonna tell a lie and hurt you";
+			}
+			else if ((video.currentTime > 59 && video.currentTime < 64) || (video.currentTime > 136 && video.currentTime < 140)) {
+				caption.innerHTML = "We've known each other for so long";
+			}
+			else if ((video.currentTime > 64 && video.currentTime < 66) || (video.currentTime > 140 && video.currentTime < 143)) {
+				caption.innerHTML = "Your heart's been aching, but";
+			}
+			else if ((video.currentTime > 66 && video.currentTime < 69) || (video.currentTime > 143 && video.currentTime < 145)) {
+				caption.innerHTML = "You're too shy to say it";
+			}
+			else if ((video.currentTime > 69 && video.currentTime < 73) || (video.currentTime > 145 && video.currentTime < 149)) {
+				caption.innerHTML = "Inside, we both know what's been going on";
+			}
+			else if ((video.currentTime > 73 && video.currentTime < 77) || (video.currentTime > 149 && video.currentTime < 153)) {
+				caption.innerHTML = "We know the game and we're gonna play it";
+			}
+			else if (video.currentTime > 77 && video.currentTime < 82) {
+				caption.innerHTML = "And if you ask me how I'm feeling";
+			}
+			else if (video.currentTime > 82 && video.currentTime < 85) {
+				caption.innerHTML = "Don't tell me you're too blind to see";
+			}
+			else if (video.currentTime > 120 && video.currentTime < 128) {
+				caption.innerHTML = "(Ooh, give you up)";
+			}
+			else if ((video.currentTime > 128 && video.currentTime < 130) || (video.currentTime > 132 && video.currentTime < 134)) {
+				caption.innerHTML = "Never gonna give, never gonna give";
+			}
+			else if ((video.currentTime > 130 && video.currentTime < 132) || (video.currentTime > 134 && video.currentTime < 136)) {
+				caption.innerHTML = "(Give you up)";
+			}
+			else {
+				caption.innerHTML = "";
+			}
+		}, false);
+	</script>
+</body>
+
+</html>
