@@ -1,1 +1,18 @@
 /* Your CSS here... */
+p {
+	font: helvetica;
+	font-size: 15pt;
+	color: black;
+}
+
+#user {
+	font: helvetica;
+	font-size: 10pt;
+	color: black;
+	font-style: italic;
+	vertical-align: sub;
+}
+
+body {
+	background-color: #E5E7EB;
+}
