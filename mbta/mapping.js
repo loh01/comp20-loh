@@ -45,7 +45,16 @@ function initMap() {
 		scaledSize: new google.maps.Size(20, 20)
 	};
 
-	// Create markers
+	// Create marker just for South Station
+	var ssmarker = new google.maps.Marker({
+		position: southStation,
+		icon: trainIcon,
+		title: stationList[0].name
+	});
+	ssmarker.setMap(map);
+	getSchedule(0, ssmarker);
+
+	// Create the rest of the markers
 	for (i = 1; i < stationList.length; i++) {
 		setStationMarker(stationList[i].lat, stationList[i].lng, stationList[i].name, i);
 	}
@@ -184,14 +193,14 @@ function getSchedule(curr, marker) {
 
 			for (i = 0; i < parsed.data.length; i++) {
 				schedString += '<p>' +
-				'<span> Train ' + i + '</span>'
-				'<span> Arrival time: ' + parsed.data[i].attributes.arrival_time + '</span>';
+				'<div> Train ' + (i+1) + '</div>' +
+				'<div> Arrival time: ' + parsed.data[i].attributes.arrival_time + '</div>';
 
 				if (parsed.data[i].attributes.direction_id == 0) {
-					schedString += '<span> Direction: To Ashmont/Braintree </span></p>';
+					schedString += '<div> Direction: Southbound (To Ashmont/Braintree) </div></p>';
 				}
 				else if (parsed.data[i].attributes.direction_id == 1) {
-					schedString += '<span> Direction: To Alewife </span></p>';
+					schedString += '<div> Direction: Northbound (To Alewife) </div></p>';
 				}
 			}
 		}
