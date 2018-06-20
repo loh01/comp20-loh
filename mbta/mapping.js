@@ -191,6 +191,12 @@ function getSchedule(curr, marker) {
 			jsonData = request.responseText;
 			parsed = JSON.parse(jsonData);
 
+			// Exception to handle Wollaston Station
+			if (curr == 18)
+			{
+				schedString += '<p> Station closed for renovations </p>';
+			}
+
 			for (i = 0; i < parsed.data.length; i++) {
 				schedString += '<p>' +
 				'<div> Train ' + (i+1) + '</div>' +
