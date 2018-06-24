@@ -180,7 +180,7 @@ function setMyMarker(lat, lng) {
 
 function getSchedule(curr, marker) {
 	var request = new XMLHttpRequest();
-	var schedapi = "https://defense-in-derpth.herokuapp.com/redline/schedule.json?stop_id=" + stationList[curr].stopid;
+	var schedapi = "https://polar-bastion-21867.herokuapp.com/redline/schedule.json?stop_id=" + stationList[curr].stopid;
 
 	request.open("GET", schedapi, true);
 
