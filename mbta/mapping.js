@@ -179,17 +179,17 @@ function setMyMarker(lat, lng) {
 }
 
 function getSchedule(curr, marker) {
-	var request = new XMLHttpRequest();
+	var request1 = new XMLHttpRequest();
 	var schedapi = "https://polar-bastion-21867.herokuapp.com/redline/schedule.json?stop_id=" + stationList[curr].stopid;
 
-	request.open("GET", schedapi, true);
+	request1.open("GET", schedapi, true);
 
 	var schedString = '<h1>' + stationList[curr].name + '</h1>';
 
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && request.status == 200) {
-			jsonData = request.responseText;
-			parsed = JSON.parse(jsonData);
+	request1.onreadystatechange = function() {
+		if (request1.readyState == 4 && request1.status == 200) {
+			jsonData1 = request1.responseText;
+			parsed1 = JSON.parse(jsonData1);
 
 			// Exception to handle Wollaston Station
 			if (curr == 18)
@@ -197,21 +197,46 @@ function getSchedule(curr, marker) {
 				schedString += '<p> Station closed for renovations </p>';
 			}
 
-			for (i = 0; i < parsed.data.length; i++) {
+			for (i = 0; i < parsed1.data.length; i++) {
 				schedString += '<p>' +
 				'<div> Train ' + (i+1) + '</div>' +
-				'<div> Arrival time: ' + parsed.data[i].attributes.arrival_time + '</div>';
+				'<div> Arrival time: ' + parsed1.data[i].attributes.arrival_time + '</div>';
 
-				if (parsed.data[i].attributes.direction_id == 0) {
+				if (parsed1.data[i].attributes.direction_id == 0) {
 					schedString += '<div> Direction: Southbound (To Ashmont/Braintree) </div></p>';
 				}
-				else if (parsed.data[i].attributes.direction_id == 1) {
+				else if (parsed1.data[i].attributes.direction_id == 1) {
 					schedString += '<div> Direction: Northbound (To Alewife) </div></p>';
 				}
 			}
 		}
-		else if (request.readyState == 4 && request.status != 200) {
+		else if (request1.readyState == 4 && request1.status != 200) {
 			schedString += "<p>Whoops, something went terribly wrong. Unable to load schedule. Status code: " + request.status + "</p>";
+		}
+	};
+
+	var request2 = new XMLHttpRequest();
+	var wsapi = "https://polar-bastion-21867.herokuapp.com/redline/wheelchair.json?stop_id=" + stationList[curr].stopid;
+
+	request2.open("GET", wsapi, true);
+
+	request2.onreadystatechange = function() {
+		if (request2.readyState == 4 && request2.status == 200) {
+			jsonData2 = request2.responseText;
+			parsed2 = JSON.parse(jsonData2);
+
+			if (parsed2.data.attributes.wheelchair_boarding == 1) {
+				schedString += '<p><strong>This station is wheelchair accessible</strong></p>';
+			}
+			else if (parsed2.data.attributes.wheelchair_boarding == 2) {
+				schedString += '<p><strong>This station is NOT wheelchair accessible</strong></p>';
+			}
+			else if (parsed2.data.attributes.wheelchair_boarding == 0) {
+				schedString += "<p><strong>There is no information on this station's wheelchair accessibility</strong></p>";
+			} 
+		}
+		else if (request2.readyState == 4 && request2.status != 200) {
+			schedString += "<p>Whoops, something went terribly wrong. Unable to load wheelchair accessibility information. Status code: " + request.status + "</p>";
 		}
 	};
 
@@ -224,5 +249,6 @@ function getSchedule(curr, marker) {
 		infowindow.open(map, marker);
 	});
 
-	request.send();
+	request1.send();
+	request2.send();
 }
