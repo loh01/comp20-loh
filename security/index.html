@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>COMP20 Lab 13</title>
+	<meta charset="utf-8" revised="2018 Jul 2" name="viewport" 
+		content="width=device-width; initial-scale=1.0; maximum-scale=1.0;
+		user-scalable=0;" />
+</head>
+
+<body>
+	<h1>Security Assessment of Not Foursquare</h1>
+	<p>Prepared by Lionel Oh</p>
+
+	<h2>Introduction</h2>
+	<hr>
+	<p>This assessment tests the security of the web application developed as part of COMP20 Lab 13. The application is meant to collect your username and coordinates (latitude and longitude). I have been hired as a security consultant to probe vulnerabilities within the application, and document the security and privacy issues I find. I will also provide suggestions to resolve these vulnerabilites.</p>
+
+	<h2>Methodology</h2>
+	<hr>
+	<p>Testing was carried out first by "black-box" hacking. However, there were limitations on the number of characters within the field boxes, which can be bypassed using Burp Suite. Despite this, I did not use Burp Suite, and proceeded to look at the source code of the application to identify most of the vulnerabilities identified. I ran the application online, and made use of Google Chrome DevTools to check the code on each page, as well as to pause script execution.</p>
+
+	<h2>Abstract of Findings</h2>
+	<hr>
+	<p>The vulnerabilities on the website stem from a lack of attention to validating what the user types in. The the user is able to crash the website or redirect the website simply because what he types in is not checked by the source code.</p>
+
+	<h2>Issues Found</h2>
+	<hr>
+	<dl>
+		<dt>1. Cross-Site Scripting</dt>
+		<ul>
+			<li>Affects 2 POST API ('/submit' and '/sendLocation'); when user is keying in data</li>
+			<li>Severity: High - This vulnerability allows a malicious user to exploit it and redirect other users to a malicious website</li>
+			<li>Data entered by the user is not sanitized and validated. The user input is subsequently inserted into the database as part of the toInsert document. This gives the user the possibility of entering an XSS payload script. When the information is then sent to either the home page or to the client site requesting the information, the script is then executed</li>
+			<li>In the screenshot below with regard to the '/submit' POST API , you can see that the payload script will redirect the homepage to the youtube video link (*Note: I did not execute this attack. Someone else had already exploited this vulnerability and the database had not been reset yet)</li>
+			<img src="XSS.png" alt="XSS attack" height="500" width="900" />
+			<li>To resolve this issue, it is reccommended that the user input is sanitized before it is included as an attribute of the object to be included in the database</li>
+			<code>
+			var toInsert = {
+				"login":sanitize(login),
+				"lat":lat,
+				"lng":lng,
+				"created_at":new Date()
+			};</code>
+		</ul>
+
+		<dt>2. Invalid Lat/Lng Values</dt>
+		<ul>
+			<li>Affects 2 POST API ('/submit' and '/sendLocation'); when user is keying in data</li>
+			<li>Severity: Medium - This vulnerability does not endanger the source code security of the application, but it is an issue that causes the application to crash.</li>
+			<li>While the application source code allows for the validation of the values for lat and lng, once those values go out of bounds, the app.post function does not know how to respond, and the app crashes. This is probably because while the first 'if' statement is fulfilled, the second nested if statement is not, yet there is no command for when the second 'if' statement is not entered</li>
+			<img src="values.png" alt="Example of invalid lat/lng values" height="400" width="500" />
+			<img src="error.png" alt="Resulting application error" height="400" width="500" />
+			<li>To resolve this issue, it is reccommended that the second 'if' statement include an 'else' statement as well, to account for the out of bound lat/lng values</li>
+			<code>
+			if ((lat >= -90.0 && lat <= 90) && (lng >= -180 && lng <= 180)) {
+			...
+			}
+			else {
+			response.send('<!doctype html><html><head><title>Not Foursquare</title><meta charset=utf-8></head><body><p>Whoops, something went terribly wrong with your data entry. <a href=/entry.html>Go back to form...</a></p></body></html>');
+			}</code>
+		</ul>
+
+		<dt>3. Vulnerability to DDoS attack</dt>
+		<ul>
+			<li>Affects the whole application</li>
+			<li>Severity: Low - This vulnerability is not likely to be exploited given the nature and purpose of the application, but cannot be ruled out entirely. A DDoS attack could still slow down and crash the application</li>
+			<li>Currently the application is running on heroku, which only allows for a certain amount of traffic given the application's limited number of dynos. Should a DDos attack occur, multiple requests to the web server might just cause it to be overloaded and crash</li>
+			<li>To prevent DDoS attacks, a web application firewall could be used. You could also reduce the Syn-Received timer. Reference: https://www.techrepublic.com/blog/it-security/ddos-attack-methods-and-how-to-prevent-or-mitigate-them/</li>
+			</ul>
+	</dl>
+
+	<h2>Conclusion</h2>
+	<hr>
+	<p>It is important for a web application dealing with data from user input to ensure that the data is validated and sanitized to prevent problems and malicious exploitation. It is also important that all this validation is done server-side, to prevent user bypass if restrictions are only coded into the html source code. Server-side validation is important and easy to do, and will save both the developer and the client a lot of trouble. Just take some time to do it!</p>
+		
+</body>
+
+</html>
