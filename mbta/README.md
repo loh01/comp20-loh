@@ -6,10 +6,10 @@
 5. Managed to draw polyline linking me to nearest train station
 
 # Challenges and Aspects I did not implement successfully:
-Had problems with the MBTA schedules - they would refuse to load on the popup window, and I don't know why
+Had initial problems with the MBTA schedules - they would refuse to load on the popup window
 
 # Resources:
 1. Piazza
 2. https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
 
-# Approximate duration spent: 10hrs (yeah I struggled with this one again)
+# Approximate duration spent: 10hrs
